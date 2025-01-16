@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import lombok.AllArgsConstructor;
 import net.sixtusdev.ems.dto.EmployeeDto;
 import net.sixtusdev.ems.entity.Employee;
+import net.sixtusdev.ems.exception.ResourceNotFoundException;
 import net.sixtusdev.ems.mapper.EmployeeMapper;
 import net.sixtusdev.ems.repository.EmployeeRepository;
 import net.sixtusdev.ems.service.EmployeeService;
@@ -22,6 +23,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee savedEmployee = employeeRepository.save(employee);
 
         return EmployeeMapper.mapToEmployeeDto(savedEmployee);
+    }
+
+    @Override
+    public EmployeeDto getEmployeeById(Long employeeId) {
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + employeeId));
+
+        return EmployeeMapper.mapToEmployeeDto(employee);
     }
 
 }
