@@ -10,6 +10,7 @@ import net.sixtusdev.ems.service.EmployeeService;
 
 @Service
 @AllArgsConstructor
+
 public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeRepository employeeRepository;
@@ -17,9 +18,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDto createEmployee(EmployeeDto employeeDto) {
         Employee employee = EmployeeMapper.mapToEmployee(employeeDto);
-        Employee saveEmployee = employeeRepository.save(employee);
 
-        return EmployeeMapper.mapToEmployeeDto(saveEmployee);
+        Employee savedEmployee = employeeRepository.save(employee);
+
+        return EmployeeMapper.mapToEmployeeDto(savedEmployee);
     }
 
 }
